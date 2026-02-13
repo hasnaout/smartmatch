@@ -1,15 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import {
   createBrowserRouter,
-  RouterProvider,
-  Route,
+  RouterProvider, 
 }from "react-router-dom";
 import Home from './pages/home';
 import Inscription from './pages/Inscription';
-
+import Connection  from './pages/Connexion'
 
 //definir les routes de l'app
 const router=createBrowserRouter([
