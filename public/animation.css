@@ -1,0 +1,26 @@
+/*annimation pour header pc */
+@keyframes down {
+  0%{
+    transform: translateY(-100px);
+  }
+  100%{
+    transform: translateY(0px);
+  }
+  
+}
+
+header{
+  animation: down 2s 1;
+}
+/*animation pour header mobile*/
+@keyframes slow {
+  0%{
+    transform: translateX(100px);
+  }
+  100%{
+    transform: translateX(0px);
+  }   
+}
+.main-div{
+  animation: slow 2s 1;
+}
