@@ -5,9 +5,8 @@ export default function Home() {
   return (
       <div className="app">
     <Header/>
-    <Main/>
+    <Main aaa='hasna'/>
     <Footer/>
-  
     </div>
   )
 }

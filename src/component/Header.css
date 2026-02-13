@@ -1,0 +1,19 @@
+header{
+  height: 70px;
+  background-color:#ffffff ;
+}
+.show-when-mobile{
+  display: none;
+}
+.hide-when-mobile{
+  display: flex;
+  justify-content: space-between;
+} 
+@media (max-width:600px) {
+  .show-when-mobile{
+    display: block;
+  }
+  .hide-when-mobile{
+    display: none;
+}
+}
