@@ -6,7 +6,7 @@ export default function Header() {
     <div> 
      <header className="hide-when-mobile">
         <img  className="logo" src="logo.png" alt="" />
-          <ul className="flex">
+      <ul className="flex">
         <li className="list">  <NavLink className="link" to="/Inscription">Inscription</NavLink></li>
         <li className="list">  <NavLink className="link" to="/Connexion">Connexion</NavLink></li>
       </ul>
@@ -17,12 +17,10 @@ export default function Header() {
         <label className="absolute" htmlFor="burger"><i class="fa-solid fa-bars"></i></label>
         <input type="checkbox" id="burger"  />
         <div className="show-on-click">
-          <div className="main-div">
-              <NavLink className="link" to="/Inscription">Inscription</NavLink>
-          </div>
-          <div className="main-div">
-               <NavLink className="link" to="/Connexion">Connexion</NavLink>
-          </div>
+      <ul className="flex">
+        <li className="list">  <NavLink className="link" to="/Inscription">Inscription</NavLink></li>
+        <li className="list">  <NavLink className="link" to="/Connexion">Connexion</NavLink></li>
+      </ul>
         </div>
 
       
