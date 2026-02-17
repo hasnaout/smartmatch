@@ -1,7 +1,7 @@
 import {Routes,Route} from 'react-router-dom';
 import Home from './pages/home';
 import Inscription from './pages/Inscription';
-import Connection  from './pages/Connexion'
+import Connection  from './pages/Connexion';
 function App() {
   return (
   <div className="App">

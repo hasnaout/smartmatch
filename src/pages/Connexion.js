@@ -7,33 +7,27 @@ export default function Connection() {
     <Header/>
     <main > 
       <div className="form-box connnexion"> 
-        <h1>Connexion</h1>
+        <div className="header">
+          <h2>Connexion</h2>
+        </div>
         <form action="#">
-          <div className="input-box">
-            <span className="icon">
-              <ion-icon name="mail"></ion-icon></span> 
-            <input type="email" required/>
-            <label>Email</label>
-          </div>
-          <div className="input-box">
-            <span className="icon"><ion-icon name="lock-closed"></ion-icon></span>
-            <input type="password" required/>
-            <label>Password</label>
+          <div className="inputs">
+            <div className="input">
+              <input type="text" placeholder="Email" required/>
+            </div>
+            <div className="input">
+              <input type="password" placeholder="Mot de passe" required/>
+            </div>
           </div>
           <div className="remember-forgot">
-            <label><input type="checkbox"/>Remember me</label>
-            <a href="#">Forgot Password?</a>
+            <label><input type="checkbox"/> Se souvenir de moi</label>
+            <a href="#">Mot de passe oublié?</a>
           </div>
-          <button type="submit" className="btn">Login</button>
-          <div className="register-link">
-            <p>Don't have an account? <a href="#">Register</a></p>
-          </div>
+          <button type="submit" className="btn">Connexion</button>
         </form>
-
       </div>
     </main>
     <Footer/>
-
     </div>
   )
 }
