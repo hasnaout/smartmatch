@@ -1,31 +1,37 @@
 import Header from '../component/header';
 import Footer from '../component/footer'; 
+import "./connexion.css";
 export default function Connection() {
   return (
-      <div className="app">
+      <div className="connexion-page">
         
     <Header/>
     <main > 
-      <div className="form-box connnexion"> 
-        <div className="header">
-          <h2>Connexion</h2>
-        </div>
+      <div className="container"> 
+          <div className="contenu-side">
+            <h1>SmartMatch</h1>
+            <p>Avec SmartMatch,trouvez votre partenaire parfait en quelques clics !</p>
+          </div>
+         <div className="form-side">
+          <h1>Connexion</h1>
         <form action="#">
           <div className="inputs">
             <div className="input">
-              <input type="text" placeholder="Email" required/>
+              <i className="fa-solid fa-envelope"></i>
+              <input type="email" placeholder="Email" required/>
             </div>
             <div className="input">
+              <i className="fa-solid fa-lock"></i>
               <input type="password" placeholder="Mot de passe" required/>
             </div>
           </div>
-          <div className="remember-forgot">
-            <label><input type="checkbox"/> Se souvenir de moi</label>
+          <div className="options">
             <a href="#">Mot de passe oublié?</a>
           </div>
           <button type="submit" className="btn">Connexion</button>
         </form>
       </div>
+    </div>
     </main>
     <Footer/>
     </div>

@@ -1,0 +1,114 @@
+/*=========================Connexion CSS============================ */
+.connexion-page{
+  min-height: 100vh;
+  /*background: linear-gradient(135deg, #593659, #3c7ef1);*/
+  display: flex;
+  flex-direction: column;
+}
+main{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:40px;
+}
+.container {
+  display: flex;
+  max-width: 700px;
+  width: 100%;
+  overflow: hidden;
+  gap: 40px; 
+  padding: 20px;
+}
+.contenu-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  text-align: center;
+}
+.contenu-side h1 {
+  color:black;
+  font-size: 40px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  align-items: center;
+}
+.contenu-side p {
+  font-size: 20px;
+  color: black;
+}
+.form-side {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  background: linear-gradient(135deg, #593659, #3c7ef1);
+}
+.form-side h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #e9b7b7;
+  font-weight: bold;
+  font-size: 30px;
+}
+.inputs {
+  width: 100%;
+}
+.input {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid #e9b7b7;
+  margin-bottom: 25px;
+  padding: 8px;
+}
+.input i {
+  margin-right: 10px;
+  color: #e9b7b7;
+}
+.input input {
+  border: none;
+  outline: none;/*Supprime contour bleu au focus.*/
+  background: transparent;
+  flex: 1;
+  font-size: 16px;
+}
+.options {
+  text-align: right;
+  margin-bottom: 20px;
+}
+.options a {
+  text-decoration: none;
+  font-size: 14px;
+  color: #e9b7b7;
+}
+.btn {
+  padding: 12px;
+  border-radius: 25px;
+  border: none;
+  background: linear-gradient(150deg, #e9b7b7, #3c7ef1);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.btn:hover {
+  transform: scale(1.05);
+}
+/*============================mobile==============================*/
+@media (max-width: 600px) {
+.container {
+  flex-direction: column; 
+  gap: 20px;
+}
+.contenu-side {
+  text-align: center;
+}
+
+.form-side {
+  padding: 30px 20px;
+}
+}
