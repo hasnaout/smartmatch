@@ -5,7 +5,7 @@ const connectUser=async(req,res)=>{
 
 //Route pour User inscription
 const inscrirUser=async(req,res)=>{
-
+ res.json({msg:'api fonctionne'})
 }
 
 //Route pour Admin connecxion
