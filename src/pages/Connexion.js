@@ -1,6 +1,7 @@
 import Header from '../component/header';
 import Footer from '../component/footer'; 
 import "./connexion.css";
+import { Link } from 'react-router-dom';
 export default function Connection() {
   return (
       <div className="connexion-page">
@@ -26,7 +27,7 @@ export default function Connection() {
             </div>
           </div>
           <div className="options">
-            <a href="#">Mot de passe oublié?</a>
+            <Link to="/Inscription">S'inscrire</Link>
           </div>
           <button type="submit" className="btn">Connexion</button>
         </form>
