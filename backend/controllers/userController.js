@@ -4,14 +4,29 @@ import jwt from 'jsonwebtoken'
 import bcrypt from "bcrypt";
 
 const createToken=(id)=>{
-  return  jwt.sign({id},)
+  return  jwt.sign({id},process.env.JWT_SECRET)
 }
 //Route pour User connecxion
 const connectUser=async(req,res)=>{
  try{
-   
- }catch(error){
+    const{email,password}=req.body;
+    const user=await userModel.findOne({email});
 
+    if(!user){
+      return res.json({succes:false,message:"Utilisateur n'existe pas"})
+    }
+    const exist=await bcrypt.compare(password,user.password);
+
+    if(exist){
+      const token =createToken(user._id)
+      res.json({succes:true,token})
+    }
+    else{
+      res.json({succes:false,message:"Informations incorrecte"})
+    }
+ }catch(error){
+     console.log(error);
+    res.json({succes:false,message:error.message})
  }
 }
 
@@ -29,7 +44,7 @@ const inscrirUser=async(req,res)=>{
    if(!validator.isEmail(email)){
      return res.json({succes:false,message:"Email non valide"});
    }
-   if(password.lenght<8){
+   if(password.length<8){
      return res.json({succes:false,message:"Mot de passe doit etre superieur a 8 caractères"});
    }
 
@@ -44,10 +59,11 @@ const inscrirUser=async(req,res)=>{
    })
 
    const user=await newUser.save()
-
-   const token=await newUser
+   const token=createToken(user._id)
+   res.json({succes:true,token})
  }catch(error){
-
+    console.log(error);
+    res.json({succes:false,message:error.message})
  }
 
 }
