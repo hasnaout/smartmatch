@@ -70,7 +70,19 @@ const inscrirUser=async(req,res)=>{
 
 //Route pour Admin connecxion
 const connectAdmin=async(req,res)=>{
-
+ try{
+   const {email,password}=req.body
+   
+   if(email===process.env.ADMIN_EMAIL && password ===process.env.ADMIN_PASSWORD){
+       const token=jwtt.sign(email+passwprd,process.env.JWT_SECRET);
+       res.json({succes:true,token})
+   }else{
+     res.json({succes:false,message:"Informations invalide"})
+    }
+   } catch(error){
+    console.log(error);
+    res.json({succes:false,message:error.message})
+ }
 }
 
-export {connectUser,inscrirUser,connectAdmin}
+export {connectUser,inscrirUser,connectAdmin};
