@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const connectDB=async()=>{
-  mongoose.connection.on("connected",()=>{
+  mongoose.connection.on("connecter",()=>{
     console.log("MongoDB connecté avec succès");
   })
  
