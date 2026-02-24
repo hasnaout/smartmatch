@@ -34,7 +34,7 @@ const connectUser=async(req,res)=>{
 const inscrirUser=async(req,res)=>{
  try{
    const {nom,email,password}=req.body;
-   //chech si user exist deja ou non
+   //check si user exist deja ou non
    const exists=await userModel.findOne({email});
    if(exists){
     return res.json({succes:false,message:"utilisteur existe déja"});
@@ -50,12 +50,11 @@ const inscrirUser=async(req,res)=>{
 
    //hasher password
    const salt=await bcrypt.genSalt(10);
-   const hashedpaswword=await bcrypt.hash(password,salt)
-
+   const hashedpassword=await bcrypt.hash(password,salt)
    const newUser=new userModel ({
     nom ,
     email,
-    password:hashedpaswword
+    password:hashedpassword
    })
 
    const user=await newUser.save()
