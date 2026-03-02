@@ -6,7 +6,7 @@ const createToken=(id)=>{
   return  jwt.sign({id},process.env.JWT_SECRET)
 }
 //Route pour User connecxion
-const connectUser=async(req,res)=>{
+ export const connectUser=async(req,res)=>{
  try{
     const{email,password}=req.body;
     const user=await userModel.findOne({email});
@@ -27,7 +27,7 @@ const connectUser=async(req,res)=>{
  }
 }
 //Route pour User inscription
-const inscrirUser=async(req,res)=>{
+export const inscrirUser=async(req,res)=>{
  try{
    const {nom,email,password}=req.body;
    //check si user exist deja ou non
@@ -59,7 +59,7 @@ const inscrirUser=async(req,res)=>{
  }
 }
 //Route pour Admin connecxion
-const connectAdmin=async(req,res)=>{
+export const connectAdmin=async(req,res)=>{
  try{
    const {email,password}=req.body
    
@@ -74,4 +74,7 @@ const connectAdmin=async(req,res)=>{
     res.json({succes:false,message:error.message})
  }
 }
-export {connectUser,inscrirUser,connectAdmin};
+
+export const deleteUser=(req,res)=>{
+  res.send("from controller")
+}

@@ -21,6 +21,11 @@ app.use('/api/user',userRouter)
 app.get('/',(req,res)=>{
   res.send("Api fonctionnelle")
 })
+app.use("/api/services",serviceRouter)
+app.use("/api/demandes",demandeRouter)
+app.use("/api/conversations",conversationRouter)
+app.use("/api/messages",messageRouter)
+app.use("/api/reviews",reviewRouter)
 
 
 app.listen(port,()=>{
