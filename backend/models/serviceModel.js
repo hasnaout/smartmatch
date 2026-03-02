@@ -20,5 +20,4 @@ const ServiceSchema=new Schema({
     timestamps:true
 });
 const Service=mongoose.models.Service || mongoose.model("Service",ServiceSchema);
-/*si model deja existe on l'utilise , sinon le crée */
 export default Service;
