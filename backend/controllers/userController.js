@@ -2,13 +2,12 @@ import validator from "validator";
 import userModel from "../models/userModel.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcrypt";
-const createToken=(id)=>{
-  return  jwt.sign({id},process.env.JWT_SECRET)
+const createToken=(id,role)=>{
+  return  jwt.sign({id,role},process.env.JWT_SECRET,{ expiresIn: "7d" });
 }
-
 export const deleteUser=async (req,res)=>{
 
-  const user=await User.findById(req.params.id)
+  const user=await userModel.findById(req.params.id)
   const token=req.cookies.accessToken;
   if(!token) return res.status(401).send("vous etes pas authentifier");
   jwt.verify(token,process.env.JWT_SECRET,(err,payload)=>{
