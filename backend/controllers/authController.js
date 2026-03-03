@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const inscription=async(req,res)=>{
   try {
-    const has=bcrypt.hashSync(req.body.password,5)
+    const hash=bcrypt.hashSync(req.body.password,5)
      const newUser= new User({
       password:hash,
       ...req.body, 
@@ -24,9 +24,9 @@ export const connexion=async (req,res)=>{
   const isCorrect=bcrypt.compareSync(req.body.password,user.password);
   if(!isCorrect) return res.status(400).send("mot de passe incorrect");
 
-  const token =jwt.connexion({
+  const token =jwt.sign({
     id:user._id,
-    estPresataire:user.estPresataire,
+    role:user.role
   },
   process.env.JWT_SECRET
 );
