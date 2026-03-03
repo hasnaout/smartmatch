@@ -4,6 +4,7 @@ import 'dotenv/config';
 import connectDB from './config/mongodb.js';
 import connectCloudinary from './config/coudinary.js';
 import userRouter from './routes/userRoute.js';
+import authRoute from './routes/authRoute.js';
 
 //App config 
 const app=express()
@@ -21,6 +22,7 @@ app.use('/api/user',userRouter)
 app.get('/',(req,res)=>{
   res.send("Api fonctionnelle")
 })
+app.use("/api/auth",authRoute)
 app.use("/api/services",serviceRouter)
 app.use("/api/demandes",demandeRouter)
 app.use("/api/conversations",conversationRouter)
