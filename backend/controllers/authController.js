@@ -1,45 +1,97 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import validator from "validator";
 
+ const createToken=(id,role)=>{
+    return jwt.sign({id,role},process.env.JWT_SECRET,{expiresIn:"7d"});
+     };
 export const inscription=async(req,res)=>{
   try {
-    const hash=bcrypt.hashSync(req.body.password,10)
-     const newUser= new User({
+    const {nom,prenom,email,adresse,telephone,password}=req.body;
+    if(!nom||!prenom||!email||!adresse||!telephone||!password){
+      return res.status(400).json({success:false,message:"Tous les champs sont obligatoires"});
+    }
+    const existeUser=await User.findOne({email});
+    if(existeUser){
+      return res.status(400).json({
+        success:false,message:"Utilisateur existe d'éja"});
+    }
+    if(!validator.isEmail(email)){
+      return res.status(400).json({
+        success:false,message:"Email non valide"
+      });
+    }
+    if(!validator.isMobilePhone(telephone,"any")){
+      return res.status(400).json({
+        success:false,message:"Télephone invalide"
+      });
+    }
+    if(!validator.isStrongPassword(password)){
+      return res.status(400).json({
+        success:false,message:"Mot de passe trop faible"
+      });
+    }
+    const hash=await bcrypt.hash(password,11)
+     const newUser= await User.create({
+       nom,
+       prenom,
+       email,
+       adresse,
+       telephone,
       password:hash,
-      ...req.body, 
      });
-
-     await newUser.save();
+     const token=createToken(newUser._id,newUser.role);
+      res.cookie("accessToken", token, {
+      httpOnly: true,
+      sameSite: "strict"
+    });
+    const { password: _, ...infos } = newUser._doc;
      res.status(201).json({
-      succes: true,
-      message: "Utilisateur créé avec succès"});
+      success: true,
+      message: "Utilisateur créé avec succès",
+      user: infos});
   } catch (error) {
-     res.status(500).json({ succes: false, message: error.message });
+     res.status(500).json({ success: false,message: "Erreur serveur"});
   }
 }
+
 export const connexion=async (req,res)=>{
  try {
-  const user=await User.findOne({email:req.body.email})
-  if(!user) return res.status(404).send("user n'existe pas")
 
-  const isCorrect=bcrypt.compareSync(req.body.password,user.password);
-  if(!isCorrect) return res.status(400).send("mot de passe incorrect");
+  const {email,password}=req.body;
+  const user=await User.findOne({email});
+  if(!user){
+     return res.status(404).json({
+        success: false,
+        message: "Utilisateur n'existe pas"
+      });
+    }
+  const isCorrect=await bcrypt.compare(password,user.password);
+  if(!isCorrect){
+      return res.status(400).json({
+        success: false,
+        message: "Mot de passe incorrect"
+      });
+    }
 
-  const token =jwt.sign({
-    id:user._id,
-    role:user.role
-  },
-  process.env.JWT_SECRET
-);
-  const {password,...infos}=user._doc
+  const token=createToken(user._id,user.role);
+  const {password: _,...infos}=user._doc;
   res.cookie("accessToken",token,{
     httpOnly:true,
+    secure:false,
+    sameSite:"strict"
   })
   .status(200)
-  .send(infos)
+  .json({
+  success: true,
+  user: infos
+});
  } catch (error) {
-   res.status(500).send("il y a un probleme")
+   res.status(500).json({
+      success: false,
+      message: error.message
+    });
  }
 }
 export const deconnexion=async(req,res)=>{
