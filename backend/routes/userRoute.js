@@ -6,6 +6,6 @@ const userRouter=express.Router();
 userRouter.post('/inscription',inscrirUser);
 userRouter.post('/connexion',connectUser);
 userRouter.post('/admin',connectAdmin);
-userRouter.delete("/delete/:id",deleteUser)
+userRouter.delete("/:id",deleteUser)
 
 export default userRouter;
