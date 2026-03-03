@@ -3,9 +3,9 @@ import {connectUser,inscrirUser,connectAdmin,deleteUser} from '../controllers/us
 
 const userRouter=express.Router();
 
-userRouter.get('/test',deleteUser)
 userRouter.post('/inscription',inscrirUser);
 userRouter.post('/connexion',connectUser);
 userRouter.post('/admin',connectAdmin);
+userRouter.delete("/delete/:id",deleteUser)
 
 export default userRouter;
