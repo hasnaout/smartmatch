@@ -4,16 +4,18 @@ import jwt from "jsonwebtoken";
 
 export const inscription=async(req,res)=>{
   try {
-    const hash=bcrypt.hashSync(req.body.password,5)
+    const hash=bcrypt.hashSync(req.body.password,10)
      const newUser= new User({
       password:hash,
       ...req.body, 
      });
 
      await newUser.save();
-     res.status(201).send("utilisateur crer avec succée");
+     res.status(201).json({
+      succes: true,
+      message: "Utilisateur créé avec succès"});
   } catch (error) {
-     res.status(500).send("il y a un probleme")
+     res.status(500).json({ succes: false, message: error.message });
   }
 }
 export const connexion=async (req,res)=>{
