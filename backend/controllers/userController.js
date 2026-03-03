@@ -76,12 +76,15 @@ export const connectAdmin=async(req,res)=>{
 }
 
 export const deleteUser=async (req,res)=>{
+
+  const user=await User.findById(req.params.id)
   const token=req.cookies.accessToken;
   if(!token) return res.status(401).send("vous etes pas authentifier");
   jwt.verify(token,process.env.JWT_SECRET,(err,payload)=>{
-    res.send(payload)
+     if(!payload.id===user._id){
+      return res.status(403).send("Vous pouvez seuelemnt supprimer votre compte")
+     }
   })
-
-  //await User.findBYIdandDelete(req.params.id);
+  await User.findBYIdandDelete(req.params.id);
   res.send("from controller")
 }
