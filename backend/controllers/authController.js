@@ -2,12 +2,7 @@ import User from "../models/userModel";
 export const connexion=async (req,res)=>{
 
   try {
-     const newUser= new User({
-      nom:"test",
-      email:"test",
-      password:"test",
-      adresse:"test",
-     });
+     const newUser= new User(req.body);
 
      await newUser.save();
      res.status(201).send("utilisateur crer avec succée");
