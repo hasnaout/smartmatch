@@ -15,7 +15,7 @@ export const inscription=async(req,res)=>{
     const existeUser=await User.findOne({email});
     if(existeUser){
       return res.status(400).json({
-        success:false,message:"Utilisateur existe d'éja"});
+        success:false,message:"Utilisateur existe d'éja avec cet email"});
     }
     if(!validator.isEmail(email)){
       return res.status(400).json({
@@ -43,10 +43,10 @@ export const inscription=async(req,res)=>{
      });
      const token=createToken(newUser._id,newUser.role);
       res.cookie("accessToken", token, {
-      httpOnly: true,
+      httpOnly: false,
       sameSite: "strict"
     });
-    const { password: _, ...infos } = newUser._doc;
+    const { password: _, ...infos } =newUser._doc;
      res.status(201).json({
       success: true,
       message: "Utilisateur créé avec succès",
@@ -58,7 +58,6 @@ export const inscription=async(req,res)=>{
 
 export const connexion=async (req,res)=>{
  try {
-
   const {email,password}=req.body;
   const user=await User.findOne({email});
   if(!user){
@@ -74,7 +73,12 @@ export const connexion=async (req,res)=>{
         message: "Mot de passe incorrect"
       });
     }
-
+  if(!email || !password){
+  return res.status(400).json({
+    success:false,
+    message:"Tous les champs sont obligatoires"
+  });
+}
   const token=createToken(user._id,user.role);
   const {password: _,...infos}=user._doc;
   res.cookie("accessToken",token,{
