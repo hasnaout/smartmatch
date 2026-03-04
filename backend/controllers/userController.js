@@ -2,9 +2,7 @@ import validator from "validator";
 import userModel from "../models/userModel.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcrypt";
-const createToken=(id,role)=>{
-  return  jwt.sign({id,role},process.env.JWT_SECRET,{ expiresIn: "7d" });
-}
+import { createToken } from "./authController.js";
 export const deleteUser=async (req,res)=>{
 
   const user=await userModel.findById(req.params.id)
