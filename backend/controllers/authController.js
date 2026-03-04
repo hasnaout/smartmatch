@@ -66,6 +66,12 @@ export const connexion=async (req,res)=>{
         message: "Utilisateur n'existe pas"
       });
     }
+    if(!email || !password){
+      return res.status(400).json({
+      success:false,
+      message:"Tous les champs sont obligatoires"
+    });
+}
   const isCorrect=await bcrypt.compare(password,user.password);
   if(!isCorrect){
       return res.status(400).json({
@@ -73,12 +79,6 @@ export const connexion=async (req,res)=>{
         message: "Mot de passe ou Email incorrect"
       });
     }
-  if(!email || !password){
-  return res.status(400).json({
-    success:false,
-    message:"Tous les champs sont obligatoires"
-  });
-}
   const token=createToken(user._id,user.role);
   const {password: _,...infos}=user._doc;
   res.cookie("accessToken",token,{
