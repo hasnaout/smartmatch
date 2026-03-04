@@ -1,11 +1,8 @@
-import validator from "validator";
-import userModel from "../models/userModel.js";
+import User from "../models/userModel.js";
 import jwt from 'jsonwebtoken'
-import bcrypt from "bcrypt";
-import { createToken } from "./authController.js";
 export const deleteUser=async (req,res)=>{
 
-  const user=await userModel.findById(req.params.id)
+  const user=await User.findById(req.params.id)
   const token=req.cookies.accessToken;
   if(!token) return res.status(401).send("vous etes pas authentifier");
   jwt.verify(token,process.env.JWT_SECRET,(err,payload)=>{
