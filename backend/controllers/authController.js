@@ -43,7 +43,8 @@ export const inscription=async(req,res)=>{
      });
      const token=createToken(newUser._id,newUser.role);
       res.cookie("accessToken", token, {
-      httpOnly: false,
+      httpOnly:true,
+      secure:false,
       sameSite: "strict"
     });
     const { password: _, ...infos } =newUser._doc;
