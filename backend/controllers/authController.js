@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import validator from "validator";
 
- const createToken=(id,role)=>{
+export const createToken=(id,role)=>{
     return jwt.sign({id,role},process.env.JWT_SECRET,{expiresIn:"7d"});
      };
 export const inscription=async(req,res)=>{
