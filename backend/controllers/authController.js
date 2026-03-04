@@ -70,7 +70,7 @@ export const connexion=async (req,res)=>{
   if(!isCorrect){
       return res.status(400).json({
         success: false,
-        message: "Mot de passe incorrect"
+        message: "Mot de passe ou Email incorrect"
       });
     }
   if(!email || !password){
