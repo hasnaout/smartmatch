@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import createError from "../utils/createError";
+import createError from "../utils/createError.js";
 export const verifyToken=(req,res,next)=>{
 try {
   
@@ -16,7 +16,7 @@ try {
 }
 }
 
-export const varifyAdmin=(req,res,next)=>{
+export const verifyAdmin=(req,res,next)=>{
   if(req.user.role!=="admin"){
     return next(createError(403,"Accès réservé aus administrateurs"))
   }
