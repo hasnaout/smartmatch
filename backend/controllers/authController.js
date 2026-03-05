@@ -60,11 +60,11 @@ export const connexion=async (req,res,next)=>{
   }
   const user=await User.findOne({email});
   if(!user){
-    return next(createError(404,"Utilisateur n'existe pas"));
+    return next(createError(401,"Email ou mot de passe incorrect"));
   }
   const isCorrect=await bcrypt.compare(password,user.password);
   if(!isCorrect){
-      return next(createError(400,"Mot de passe ou Email incorrect"))
+      return next(createError(401,"Email ou mot de passe incorrect"))
   }
   const token=createToken(user._id,user.role);
   const {password: _,...infos}=user._doc;
