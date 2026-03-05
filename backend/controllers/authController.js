@@ -82,5 +82,15 @@ export const connexion=async (req,res,next)=>{
  }
 }
 export const deconnexion=async(req,res,next)=>{
-  
+  try {
+    res.clearCookie("accessToken",{
+      sameSite:"none",
+      secure:true
+    }).status(200).json({
+      success:true,
+    message:"Déconnexion réussie"
+    })
+  } catch (error) {
+    next(error)
+  }
 }
