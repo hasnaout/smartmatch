@@ -7,6 +7,11 @@ import createError from "../utils/createError.js"
 const createToken=(id,role)=>{
     return jwt.sign({id,role},process.env.JWT_SECRET,{expiresIn:"7d"});
      };
+const cookieOptions={
+  httpOnly:true,
+  secure:false,
+  sameSite:"strict"
+}
 export const inscription=async(req,res,next)=>{
   try {
     const {nom,prenom,email,adresse,telephone,password}=req.body;
@@ -36,11 +41,7 @@ export const inscription=async(req,res,next)=>{
       password:hash,
      });
      const token=createToken(newUser._id,newUser.role);
-      res.cookie("accessToken", token, {
-      httpOnly:true,
-      secure:false,
-      sameSite: "strict"
-    });
+      res.cookie("accessToken", token,cookieOptions);
     const { password: _, ...infos } =newUser._doc;
      res.status(201).json({
       success: true,
@@ -67,11 +68,7 @@ export const connexion=async (req,res,next)=>{
   }
   const token=createToken(user._id,user.role);
   const {password: _,...infos}=user._doc;
-  res.cookie("accessToken",token,{
-    httpOnly:true,
-    secure:false,
-    sameSite:"strict"
-  })
+  res.cookie("accessToken",token,cookieOptions)
   .status(200)
   .json({
   success: true,
@@ -83,11 +80,8 @@ export const connexion=async (req,res,next)=>{
 }
 export const deconnexion=async(req,res,next)=>{
   try {
-    res.clearCookie("accessToken",{
-      sameSite:"none",
-      secure:true
-    }).status(200).json({
-      success:true,
+    res.clearCookie("accessToken",cookieOptions).status(200).json({
+    success:true,
     message:"Déconnexion réussie"
     })
   } catch (error) {
