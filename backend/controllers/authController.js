@@ -2,6 +2,7 @@ import User from "../models/userModel.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import validator from "validator";
+import createError from "../utils/createError.js"
 
 const createToken=(id,role)=>{
     return jwt.sign({id,role},process.env.JWT_SECRET,{expiresIn:"7d"});
@@ -10,27 +11,20 @@ export const inscription=async(req,res,next)=>{
   try {
     const {nom,prenom,email,adresse,telephone,password}=req.body;
     if(!nom||!prenom||!email||!adresse||!telephone||!password){
-      return res.status(400).json({success:false,message:"Tous les champs sont obligatoires"});
+      return  next(createError(400,"Tous les champs sont obligatoires"));
     }
     const existeUser=await User.findOne({email});
     if(existeUser){
-      return res.status(400).json({
-        success:false,message:"Utilisateur existe d'éja avec cet email"});
+      return next(createError(400,"Utilisateur existe d'éja avec cet email"));
     }
     if(!validator.isEmail(email)){
-      return res.status(400).json({
-        success:false,message:"Email non valide"
-      });
+      return next(createError(400,"Email non valide"));
     }
     if(!validator.isMobilePhone(telephone,"any")){
-      return res.status(400).json({
-        success:false,message:"Télephone invalide"
-      });
+      return next(createError(400,"Télephone invalide"));
     }
     if(!validator.isStrongPassword(password)){
-      return res.status(400).json({
-        success:false,message:"Mot de passe trop faible"
-      });
+      return next(createError(400,"Mot de passe trop faible"));
     }
     const hash=await bcrypt.hash(password,11)
      const newUser= await User.create({
@@ -62,23 +56,14 @@ export const connexion=async (req,res,next)=>{
   const {email,password}=req.body;
   const user=await User.findOne({email});
   if(!user){
-     return res.status(404).json({
-        success: false,
-        message: "Utilisateur n'existe pas"
-      });
+     return next(createError(404,"Utilisateur n'existe pas"));
     }
     if(!email || !password){
-      return res.status(400).json({
-      success:false,
-      message:"Tous les champs sont obligatoires"
-    });
+      return next(createError(400,"Tous les champs sont obligatoires"))
 }
   const isCorrect=await bcrypt.compare(password,user.password);
   if(!isCorrect){
-      return res.status(400).json({
-        success: false,
-        message: "Mot de passe ou Email incorrect"
-      });
+      return next(createError(400,"Mot de passe ou Email incorrect"))
     }
   const token=createToken(user._id,user.role);
   const {password: _,...infos}=user._doc;
@@ -96,6 +81,6 @@ export const connexion=async (req,res,next)=>{
    next(error);
  }
 }
-export const deconnexion=async(req,res)=>{
+export const deconnexion=async(req,res,next)=>{
   
 }
