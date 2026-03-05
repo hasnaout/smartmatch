@@ -17,6 +17,16 @@ connectCloudinary()
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors());
+app.use((err,req,res,next)=>{
+   const Status=err.status || 500;
+   const Message=err.message || "Erreur interne du serveur"
+
+   return res.status(Status).json({
+    success:false,
+    Status,Message
+    
+   });
+});
 
 
 //api endpoints

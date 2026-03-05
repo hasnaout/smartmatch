@@ -6,7 +6,7 @@ import validator from "validator";
 const createToken=(id,role)=>{
     return jwt.sign({id,role},process.env.JWT_SECRET,{expiresIn:"7d"});
      };
-export const inscription=async(req,res)=>{
+export const inscription=async(req,res,next)=>{
   try {
     const {nom,prenom,email,adresse,telephone,password}=req.body;
     if(!nom||!prenom||!email||!adresse||!telephone||!password){
@@ -53,11 +53,11 @@ export const inscription=async(req,res)=>{
       message: "Utilisateur créé avec succès",
       user: infos});
   } catch (error) {
-     res.status(500).json({ success: false,message: "Erreur serveur"});
+     next(error);
   }
 }
 
-export const connexion=async (req,res)=>{
+export const connexion=async (req,res,next)=>{
  try {
   const {email,password}=req.body;
   const user=await User.findOne({email});
@@ -93,10 +93,7 @@ export const connexion=async (req,res)=>{
   user: infos
 });
  } catch (error) {
-   res.status(500).json({
-      success: false,
-      message: error.message
-    });
+   next(error);
  }
 }
 export const deconnexion=async(req,res)=>{
