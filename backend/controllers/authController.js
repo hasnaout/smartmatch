@@ -54,17 +54,17 @@ export const inscription=async(req,res,next)=>{
 export const connexion=async (req,res,next)=>{
  try {
   const {email,password}=req.body;
+  if(!email || !password){
+    return next(createError(400,"Tous les champs sont obligatoires"))
+  }
   const user=await User.findOne({email});
   if(!user){
-     return next(createError(404,"Utilisateur n'existe pas"));
-    }
-    if(!email || !password){
-      return next(createError(400,"Tous les champs sont obligatoires"))
-}
+    return next(createError(404,"Utilisateur n'existe pas"));
+  }
   const isCorrect=await bcrypt.compare(password,user.password);
   if(!isCorrect){
       return next(createError(400,"Mot de passe ou Email incorrect"))
-    }
+  }
   const token=createToken(user._id,user.role);
   const {password: _,...infos}=user._doc;
   res.cookie("accessToken",token,{
