@@ -1,33 +1,24 @@
 import jwt from "jsonwebtoken";
-
+import createError from "../utils/createError";
 export const verifyToken=(req,res,next)=>{
 try {
   
   const token =req.cookies.accessToken;
   if(!token){
-     return res.status(401).json({
-      success:false,
-      message:"Vous n'etes pas authentifié"
-     });
+     return next(createError(401,"Vous n'etes pas authentifié"))
   }
-  const decode=jwt.verify(token,process.JWT_SECRET);
+  const decode=jwt.verify(token,process.env.JWT_SECRET);
    // On attache l'utilisateur à la requête
   req.user=decode;
   next(); // passe au controller
 } catch (error) {
-   return res.status(403).json({
-    success:false,
-    message:"Token invalide"
-   });
+   next(error)
 }
 }
 
 export const varifyAdmin=(req,res,next)=>{
   if(req.user.role!=="admin"){
-    return res.status(403).json({
-      success:false,
-      message:"Accès réservé aus administrateurs"
-    });
+    return next(createError(403,"Accès réservé aus administrateurs"))
   }
   next();
 }
