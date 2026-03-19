@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
 const {Schema}=mongoose;
 const userSchema=new Schema({
+  googleId:{type:String},
   nom:{ type:String ,required:true},
   prenom:{type:String,required:true},
   email:{type:String,required:true,unique:true},
   adresse:{type:String,required:true},
   telephone:{type:String,required:false},
   password:{type:String,required:true},
-  img:{type:String,required:false},
+  profile_img:{type:String,default:"../assets/user.jpg"},
+  cover:{String,default:"../assets/cover.jpg"},
   desc:{type:String,required:false},
   role:{type:String,enum:["client","prestataire","admin"],default:"client"},
 },{
