@@ -7,5 +7,5 @@ const MessageSchema=new Schema({
 },{
     timestamps:true
 });
-const Message=mongoose.models.Message || mongoose.model("Message",DemandeMessage);
+const Message=mongoose.models.Message || mongoose.model("Message",MessageSchema);
 export default Message;

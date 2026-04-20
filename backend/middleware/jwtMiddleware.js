@@ -18,7 +18,7 @@ try {
 
 export const verifyAdmin=(req,res,next)=>{
   if(req.user.role!=="admin"){
-    return next(createError(403,"Accès réservé aus administrateurs"))
+    return next(createError(403,"Accès réservé aux administrateurs"))
   }
   next();
 }

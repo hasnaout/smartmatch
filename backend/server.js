@@ -32,10 +32,7 @@ app.use("/api/conversations",conversationRouter)
 app.use("/api/messages",messageRouter)
 app.use("/api/reviews",reviewRouter)*/
 
-
-app.listen(port,()=>{
-  console.log(` Le Serveur fonctionne sur le port ${port}`)
-})
+//Middleware d'erreur
 app.use((err,req,res,next)=>{
    const Status=err.status || 500;
    const Message=err.message || "Erreur interne du serveur"
@@ -46,3 +43,7 @@ app.use((err,req,res,next)=>{
     
    });
 });
+
+app.listen(port,()=>{
+  console.log(` Le Serveur fonctionne sur le port ${port}`)
+})
